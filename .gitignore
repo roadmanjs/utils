@@ -16,6 +16,7 @@ service.account.json*
 .idea/
 node_modules/
 build/
+dist-client/
 dist/
 tmp/
 temp/
