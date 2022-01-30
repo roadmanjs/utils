@@ -17,6 +17,22 @@
     },
     "license": "MIT",
     "private": false,
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/roadmanjs/utils.git"
+    },
+    "keywords": [
+        "roadman",
+        "roadmanjs",
+        "utils",
+        "graphql",
+        "client",
+        "scripts"
+    ],
+    "bugs": {
+        "url": "https://github.com/roadmanjs/utils/issues"
+    },
+    "homepage": "https://github.com/roadmanjs/utils",
     "scripts": {
         "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
         "build": "rm -rf dist && ./node_modules/.bin/tsc --skipLibCheck",
