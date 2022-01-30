@@ -10,6 +10,7 @@ export interface CreatePackageJson {
     name: string;
     description: string;
     dependencies?: any; // object
+    extraProps?: any;
 }
 /**
  * Re-usable method for generating client package.json
@@ -22,6 +23,7 @@ export const createClientPackageJson = async (args: CreatePackageJson): Promise<
         name,
         dependencies,
         description,
+        extraProps,
     } = args;
 
     try {
@@ -40,6 +42,7 @@ export const createClientPackageJson = async (args: CreatePackageJson): Promise<
             devDependencies: {}, // make it empty
             peerDependencies: {}, // make it empty
             scripts: {}, // empty scripts
+            ...extraProps
         };
 
         // console.log('new packageJson file', newPackage);
