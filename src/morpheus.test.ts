@@ -41,7 +41,7 @@ let demoFiles: MorpheusArgs[] = [
 describe('Morpheus', () => {
     let ginterfaceDefinition: InterfaceDefinition = null;
     it('it should write TS files with consts and export them', async () => {
-        const project = await writeAllFilesToProject(demoFiles, '.');
+        const project = await writeAllFilesToProject(demoFiles, '.', 'src/client');
         expect(project).to.be.true;
     });
 
@@ -54,7 +54,7 @@ describe('Morpheus', () => {
         // Add the create ginterfaceDefinition
         demoFiles[0].interfaces = [ginterfaceDefinition];
 
-        const project = await writeAllFilesToProject(demoFiles, '.');
+        const project = await writeAllFilesToProject(demoFiles, '.', 'src/client');
         expect(project).to.be.true;
     });
 

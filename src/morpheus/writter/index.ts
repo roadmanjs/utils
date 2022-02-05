@@ -11,6 +11,7 @@ import {
 import {IType, InterfaceDefinition} from '../interface';
 
 interface WriteFileProps extends StatementedNodeStructure {
+    pathToFolder?: string; //
     pathToTs: string;
     filename: string;
     variables?: OptionalKind<VariableDeclarationStructure>[];
@@ -19,7 +20,7 @@ interface WriteFileProps extends StatementedNodeStructure {
 }
 
 export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
-    const {filename, statements, variables, interfaces, exports, pathToTs} = props;
+    const {filename, statements, variables, interfaces, exports, pathToTs, pathToFolder} = props;
 
     const project = new Project({
         tsConfigFilePath: `${pathToTs}/tsconfig.json`,
@@ -27,7 +28,7 @@ export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
     });
 
     const sourceFile = project.createSourceFile(
-        `${pathToTs}/${filename}.ts`,
+        `${pathToFolder || pathToTs}/${filename}.ts`,
         {},
         {overwrite: true}
     );
