@@ -1,0 +1,67 @@
+/**
+ * Define all models that can should be morphed
+ */
+import {ExportDeclarationStructure, StructureKind} from 'ts-morph';
+
+import {toSnakeUpper} from '../utils/text.utils';
+import {writeTsFile} from './writter';
+
+interface Consts {
+    name: string;
+    value: string;
+    leadingTrivia?: string;
+}
+
+interface MorpheusArgs {
+    filename: string;
+    consts: Consts[];
+    interfaces?: any[]; // todo
+}
+/**
+ * Morpheus in action
+ */
+export const writeAllFilesToProject = async (args: MorpheusArgs[]) => {
+    
+  // write each file
+    const writeFilesTasks = args.map((arg) => {
+        const {consts: constStatements, filename} = arg;
+        const nameSNAKE_CASE = toSnakeUpper(filename);
+
+        return {
+            filename: nameSNAKE_CASE,
+            task: writeTsFile({
+                filename: nameSNAKE_CASE,
+                variables: constStatements.map((con) => ({
+                    name: con.name,
+                    initializer: JSON.stringify(con.value),
+                    leadingTrivia: (writer) => {
+                        writer.writeLine('\n');
+
+                        if (con?.leadingTrivia) {
+                            writer.writeLine(con.leadingTrivia);
+                        }
+                    },
+                    trailingTrivia: (writer) => writer.writeLine('\n'),
+                })),
+            }),
+        };
+    });
+
+    //  write all files
+    await Promise.all(writeFilesTasks.map((i) => i.task));
+
+    // write all exports
+    const allFileExports: ExportDeclarationStructure[] = writeFilesTasks
+        .map((i) => i.filename)
+        .map((c) => ({
+            kind: StructureKind.ExportDeclaration,
+            //   namespaceExport: "*",
+            moduleSpecifier: `./${c}`,
+        }));
+
+    // write final index file
+    await writeTsFile({
+        filename: 'index',
+        exports: allFileExports,
+    });
+};
