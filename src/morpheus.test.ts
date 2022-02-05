@@ -19,7 +19,7 @@ const demoFiles: MorpheusArgs[] = [
 
 describe('Morpheus', () => {
     it('it should write TS files with consts and export them', async () => {
-       const project =  await writeAllFilesToProject(demoFiles);
+       const project =  await writeAllFilesToProject(demoFiles, "../");
        expect(project).to.be.true;
     });
 });
