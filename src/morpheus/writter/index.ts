@@ -10,7 +10,7 @@ import {
 } from "ts-morph";
 
 interface WriteFileProps extends StatementedNodeStructure {
-  pathToTs?: string;
+  pathToTs: string;
   filename: string;
   variables?: OptionalKind<VariableDeclarationStructure>[];
   interfaces?: OptionalKind<InterfaceDeclarationStructure>[];
@@ -18,7 +18,7 @@ interface WriteFileProps extends StatementedNodeStructure {
 }
 
 export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
-  const { filename, statements, variables, interfaces, exports, pathToTs = __dirname + "/../../../../client/", } = props;
+  const { filename, statements, variables, interfaces, exports, pathToTs, } = props;
   
   const project = new Project({
     tsConfigFilePath: `${pathToTs}/tsconfig.json`,

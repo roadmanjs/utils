@@ -20,7 +20,7 @@ export interface MorpheusArgs {
 /**
  * Morpheus in action
  */
-export const writeAllFilesToProject = async (args: MorpheusArgs[], path?: string) => {
+export const writeAllFilesToProject = async (args: MorpheusArgs[], path: string) => {
     // write each file
     const writeFilesTasks = args.map((arg) => {
         const {consts: constStatements, filename} = arg;
@@ -61,6 +61,7 @@ export const writeAllFilesToProject = async (args: MorpheusArgs[], path?: string
 
     // write final index file
     await writeTsFile({
+        pathToTs: path,
         filename: 'index',
         exports: allFileExports,
     });

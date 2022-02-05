@@ -10,8 +10,7 @@ const demoFiles: MorpheusArgs[] = [
         consts: [
             {
                 name: 'GoodConst',
-                value: 'somevalue',
-                leadingTrivia: '// some text before the definition',
+                value: 'somevalue'
             },
         ],
     },
@@ -19,7 +18,9 @@ const demoFiles: MorpheusArgs[] = [
 
 describe('Morpheus', () => {
     it('it should write TS files with consts and export them', async () => {
-       const project =  await writeAllFilesToProject(demoFiles, "../");
+       const project =  await writeAllFilesToProject(demoFiles, ".");
        expect(project).to.be.true;
     });
+
+    // TODO for interfaces
 });
