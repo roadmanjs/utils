@@ -6,13 +6,13 @@ import {ExportDeclarationStructure, StructureKind} from 'ts-morph';
 import {toSnakeUpper} from '../utils/text.utils';
 import {writeTsFile} from './writter';
 
-interface Consts {
+export interface Consts {
     name: string;
     value: string;
     leadingTrivia?: string;
 }
 
-interface MorpheusArgs {
+export interface MorpheusArgs {
     filename: string;
     consts: Consts[];
     interfaces?: any[]; // todo
@@ -20,9 +20,8 @@ interface MorpheusArgs {
 /**
  * Morpheus in action
  */
-export const writeAllFilesToProject = async (args: MorpheusArgs[]) => {
-    
-  // write each file
+export const writeAllFilesToProject = async (args: MorpheusArgs[], path?: string) => {
+    // write each file
     const writeFilesTasks = args.map((arg) => {
         const {consts: constStatements, filename} = arg;
         const nameSNAKE_CASE = toSnakeUpper(filename);
@@ -30,6 +29,7 @@ export const writeAllFilesToProject = async (args: MorpheusArgs[]) => {
         return {
             filename: nameSNAKE_CASE,
             task: writeTsFile({
+                pathToTs: path,
                 filename: nameSNAKE_CASE,
                 variables: constStatements.map((con) => ({
                     name: con.name,
@@ -64,4 +64,6 @@ export const writeAllFilesToProject = async (args: MorpheusArgs[]) => {
         filename: 'index',
         exports: allFileExports,
     });
+
+    return true;
 };
