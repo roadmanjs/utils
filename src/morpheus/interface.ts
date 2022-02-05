@@ -42,7 +42,7 @@ export interface InterfaceProperty {
     type: IType;
 }
 
-interface InterfaceDefinition {
+export interface InterfaceDefinition {
     name: string;
     properties: InterfaceProperty[];
 }

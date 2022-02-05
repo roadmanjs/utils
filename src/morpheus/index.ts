@@ -3,6 +3,7 @@
  */
 import {ExportDeclarationStructure, StructureKind} from 'ts-morph';
 
+import {InterfaceDefinition} from './interface';
 import {toSnakeUpper} from '../utils/text.utils';
 import {writeTsFile} from './writter';
 
@@ -15,7 +16,7 @@ export interface Consts {
 export interface MorpheusArgs {
     filename: string;
     consts: Consts[];
-    interfaces?: any[]; // todo
+    interfaces?: InterfaceDefinition[]; // todo
 }
 /**
  * Morpheus in action
@@ -23,7 +24,7 @@ export interface MorpheusArgs {
 export const writeAllFilesToProject = async (args: MorpheusArgs[], path: string) => {
     // write each file
     const writeFilesTasks = args.map((arg) => {
-        const {consts: constStatements, filename} = arg;
+        const {consts: constStatements, filename, interfaces} = arg;
         const nameSNAKE_CASE = toSnakeUpper(filename);
 
         return {
@@ -34,15 +35,16 @@ export const writeAllFilesToProject = async (args: MorpheusArgs[], path: string)
                 variables: constStatements.map((con) => ({
                     name: con.name,
                     initializer: JSON.stringify(con.value),
-                    leadingTrivia: (writer) => {
-                        writer.writeLine('\n');
+                    // leadingTrivia: (writer) => {
+                    //     writer.writeLine('\n');
 
-                        if (con?.leadingTrivia) {
-                            writer.writeLine(con.leadingTrivia);
-                        }
-                    },
-                    trailingTrivia: (writer) => writer.writeLine('\n'),
+                    //     if (con?.leadingTrivia) {
+                    //         writer.writeLine(con.leadingTrivia);
+                    //     }
+                    // },
+                    // trailingTrivia: (writer) => writer.writeLine('\n'),
                 })),
+                interfaces,
             }),
         };
     });

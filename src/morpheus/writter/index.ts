@@ -8,18 +8,13 @@ import {
     VariableDeclarationKind,
     VariableDeclarationStructure,
 } from 'ts-morph';
+import {IType, InterfaceDefinition} from '../interface';
 
-import {IType} from '../interface';
-
-interface FileInterfaces {
-    name: string;
-    properties: {name: string; type: IType}[];
-}
 interface WriteFileProps extends StatementedNodeStructure {
     pathToTs: string;
     filename: string;
     variables?: OptionalKind<VariableDeclarationStructure>[];
-    interfaces?: FileInterfaces[];
+    interfaces?: InterfaceDefinition[];
     exports?: OptionalKind<ExportDeclarationStructure>[];
 }
 
@@ -37,18 +32,11 @@ export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
         {overwrite: true}
     );
 
-    if (variables) {
-        sourceFile.addVariableStatement({
-            declarationKind: VariableDeclarationKind.Const, // defaults to "let"
-            isExported: true,
-            declarations: variables,
-        });
-    }
-
     if (interfaces) {
         interfaces.map((interfc) => {
             const interfaceDef = sourceFile.addInterface({
                 name: interfc.name,
+                isExported: true,
             });
 
             interfc.properties.map((proper) => {
@@ -57,6 +45,14 @@ export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
                     type: proper.type,
                 });
             });
+        });
+    }
+
+    if (variables) {
+        sourceFile.addVariableStatement({
+            declarationKind: VariableDeclarationKind.Const, // defaults to "let"
+            isExported: true,
+            declarations: variables,
         });
     }
 
