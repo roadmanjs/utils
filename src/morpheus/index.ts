@@ -9,7 +9,7 @@ import {writeTsFile} from './writter';
 
 export interface Consts {
     name: string;
-    value: string;
+    value: any;
     leadingTrivia?: string;
 }
 
