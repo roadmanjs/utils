@@ -77,5 +77,22 @@ export const writeAllFilesToProject = async (
     return true;
 };
 
+export const createIndexExports = async (filesname: string[], pathToFolder: string, path: string) => {
+    // write all exports
+    const allFileExports: ExportDeclarationStructure[] = filesname.map((c) => ({
+        kind: StructureKind.ExportDeclaration,
+        //   namespaceExport: "*",
+        moduleSpecifier: `./${c}`,
+    }));
+
+    // write final index file
+    await writeTsFile({
+        pathToFolder,
+        pathToTs: path,
+        filename: 'index',
+        exports: allFileExports,
+    });
+};
+
 export * from './interface';
 export * from './writter';
