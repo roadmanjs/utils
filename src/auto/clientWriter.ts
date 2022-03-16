@@ -23,7 +23,8 @@ interface Args {
 
 
 /**
- * Write typescript files to project
+ * Write files to project
+ * e.g clients from any @couchset automation
  * @param arg 
  */
 export const writeAutomaticClient = async (arg: Args) => {

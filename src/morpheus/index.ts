@@ -5,7 +5,7 @@ import {ExportDeclarationStructure, StructureKind} from 'ts-morph';
 
 import {InterfaceDefinition} from './interface';
 import {toSnakeUpper} from '../utils/text.utils';
-import {writeTsFile} from './writter';
+import {writeTsFile} from './writer';
 
 export interface Consts {
     name: string;
@@ -96,4 +96,4 @@ export const createIndexExports = async (filesname: string[], pathToFolder: stri
 };
 
 export * from './interface';
-export * from './writter';
+export * from './writer';
