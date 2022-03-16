@@ -17,6 +17,7 @@ export interface MorpheusArgs {
     filename: string;
     consts: Consts[];
     interfaces?: InterfaceDefinition[]; // todo
+    createIndex?: boolean;
 }
 /**
  * Morpheus in action
