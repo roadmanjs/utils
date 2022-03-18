@@ -35,7 +35,7 @@
     "homepage": "https://github.com/roadmanjs/utils",
     "scripts": {
         "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
-        "build": "rm -rf dist && ./node_modules/.bin/tsc --skipLibCheck",
+        "build": "rm -rf dist src/client && ./node_modules/.bin/tsc --skipLibCheck",
         "test": "mocha src/*test.ts --exit",
         "morph": "mocha src/morpheus.test.ts --exit",
         "prepublishOnly": "npm run build",
