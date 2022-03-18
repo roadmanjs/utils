@@ -18,7 +18,11 @@ class GClass {
 
 let demoFiles: MorpheusArgs[] = [
     {
-        filename: 'somefile_name3',
+        filename: 'somefile_name_nice',
+
+        exports: [
+            { kind: 10, moduleSpecifier: "./nicefile"}
+        ]
         // consts: [
         //     {
         //         name: 'GoodConst',
