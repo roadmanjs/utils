@@ -10,6 +10,8 @@ import {
 } from 'ts-morph';
 import {IType, InterfaceDefinition} from '../interface';
 
+import isEmpty  from 'lodash/isEmpty';
+
 interface WriteFileProps extends StatementedNodeStructure {
     pathToFolder?: string; //
     pathToTs: string;
@@ -33,7 +35,7 @@ export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
         {overwrite: true}
     );
 
-    if (interfaces) {
+    if (!isEmpty(interfaces)) {
         interfaces.map((interfc) => {
             const interfaceDef = sourceFile.addInterface({
                 name: interfc.name,
@@ -49,7 +51,7 @@ export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
         });
     }
 
-    if (variables) {
+    if (!isEmpty(variables)) {
         sourceFile.addVariableStatement({
             declarationKind: VariableDeclarationKind.Const, // defaults to "let"
             isExported: true,
@@ -57,7 +59,7 @@ export const writeTsFile = async (props: WriteFileProps): Promise<any> => {
         });
     }
 
-    if (exports) {
+    if (!isEmpty(exports)) {
         sourceFile.addExportDeclarations(exports);
     }
 

@@ -13,23 +13,22 @@ interface ClientArgs {
     name: string;
     client: any; // client from any @couchset automation
     fragment: any;
-};
+}
 
 interface Args {
     rootDir: string; // .
     destDir: string; // src/some/path
-    clients: ClientArgs[]
-};
-
+    clients: ClientArgs[];
+    extraMorphs?: MorpheusArgs[];
+}
 
 /**
  * Write files to project
  * e.g clients from any @couchset automation
- * @param arg 
+ * @param arg
  */
 export const writeAutomaticClient = async (arg: Args) => {
-
-    const { rootDir, destDir, clients } = arg;
+    const {rootDir, destDir, clients, extraMorphs = []} = arg;
 
     const clientMorphs = clients.map((client) =>
         Object.keys(client.client).map((key) => {
@@ -65,7 +64,7 @@ export const writeAutomaticClient = async (arg: Args) => {
         })
     );
 
-    const morphs: MorpheusArgs[] = [...flatten(clientMorphs)];
+    const morphs: MorpheusArgs[] = [...flatten(clientMorphs), ...extraMorphs];
 
     await writeAllFilesToProject(morphs, rootDir, destDir);
 };

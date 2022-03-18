@@ -18,13 +18,13 @@ class GClass {
 
 let demoFiles: MorpheusArgs[] = [
     {
-        filename: 'somefile_name',
-        consts: [
-            {
-                name: 'GoodConst',
-                value: 'somevalue',
-            },
-        ],
+        filename: 'somefile_name3',
+        // consts: [
+        //     {
+        //         name: 'GoodConst',
+        //         value: 'somevalue',
+        //     },
+        // ],
         // interfaces: [
         //     {
         //         name: 'GClass',

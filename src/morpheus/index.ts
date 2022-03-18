@@ -15,7 +15,7 @@ export interface Consts {
 
 export interface MorpheusArgs {
     filename: string;
-    consts: Consts[];
+    consts?: Consts[];
     interfaces?: InterfaceDefinition[]; // todo
     createIndex?: boolean;
 }
@@ -29,7 +29,7 @@ export const writeAllFilesToProject = async (
 ) => {
     // write each file
     const writeFilesTasks = args.map((arg) => {
-        const {consts: constStatements, filename, interfaces} = arg;
+        const {consts: constStatements = [], filename, interfaces} = arg;
         const nameSNAKE_CASE = toSnakeUpper(filename);
 
         return {
@@ -78,7 +78,11 @@ export const writeAllFilesToProject = async (
     return true;
 };
 
-export const createIndexExports = async (filesname: string[], pathToFolder: string, path: string) => {
+export const createIndexExports = async (
+    filesname: string[],
+    pathToFolder: string,
+    path: string
+) => {
     // write all exports
     const allFileExports: ExportDeclarationStructure[] = filesname.map((c) => ({
         kind: StructureKind.ExportDeclaration,
