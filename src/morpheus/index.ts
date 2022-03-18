@@ -1,7 +1,7 @@
 /**
  * Define all models that can should be morphed
  */
-import {ExportDeclarationStructure, StructureKind} from 'ts-morph';
+import {ExportDeclarationStructure, OptionalKind, StructureKind} from 'ts-morph';
 
 import {InterfaceDefinition} from './interface';
 import {toSnakeUpper} from '../utils/text.utils';
@@ -16,7 +16,8 @@ export interface Consts {
 export interface MorpheusArgs {
     filename: string;
     consts?: Consts[];
-    interfaces?: InterfaceDefinition[]; // todo
+    interfaces?: InterfaceDefinition[]; 
+    exports?: OptionalKind<ExportDeclarationStructure>[];
     createIndex?: boolean;
 }
 /**
@@ -29,7 +30,7 @@ export const writeAllFilesToProject = async (
 ) => {
     // write each file
     const writeFilesTasks = args.map((arg) => {
-        const {consts: constStatements = [], filename, interfaces} = arg;
+        const {consts: constStatements = [], filename, interfaces, exports = []} = arg;
         const nameSNAKE_CASE = toSnakeUpper(filename);
 
         return {
@@ -50,6 +51,7 @@ export const writeAllFilesToProject = async (
                     // },
                     // trailingTrivia: (writer) => writer.writeLine('\n'),
                 })),
+                exports,
                 interfaces,
             }),
         };
